@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      data-th-fragment="header">
+<body>
+<nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md" data-th-fragment="left">
+    <div class="col-md-4 col-xl-3">
+
+        <div class="row">
+            <div class="col-md-12">
+                    <span>
+                      <a href="" title="wxmgcs" >
+                        <img src="../images/patrick.jpg" class="blog-avatar-230"
+                             th:width="30" th:headers="60"
+                             alt="wxmgcs">
+                      </a>
+                    </span>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="card-text">老王</h2>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <h4 class="card-text">Patrick</h4>
+            </div>
+        </div>
+        <hr>
+        <div class="row ">
+            <div class="col-md-12">
+                <h5><i class="fa fa-envelope-o" aria-hidden="true"></i>
+                    <a href="mailto:wxmgcs@gmail.com">wxmgcs@gmail.com</a></h5>
+            </div>
+        </div>
+
+        <!-- 分类 -->
+        <div class="card my-4">
+            <h5 class="card-header"><i class="fa fa-bars" aria-hidden="true"></i> 专题</h5>
+
+            <ul class="list-group">
+                <a href="/blogs?keyword=jvm" class="list-group-item" title="JVM">
+                    JVM
+                </a>
+                <a href="/blogs?keyword=springboot" class="list-group-item" title="SpringBoot">
+                    SpringBoot
+                </a>
+                <a href="/blogs?keyword=springmvc" class="list-group-item" title="SpringMVC">
+                    SpringMVC
+                </a>
+                <a href="/blogs?keyword=springcloud" class="list-group-item" title="SpringCloud">
+                    SpringCloud
+                </a>
+                <a href="/blogs?keyword=android" class="list-group-item" title="Android">
+                    Android
+                </a>
+                <a href="/blogs?keyword=ios" class="list-group-item" title="IOS">
+                    IOS
+                </a>
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

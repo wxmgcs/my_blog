@@ -41,16 +41,16 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="/blogs" th:href="@{/}">MyBlog</a>
+        <a class="navbar-brand" href="/blogs/list?keyword=jvm">MyBlog</a>
 
         <div class="collapse navbar-collapse" id="navbarsContainer">
 
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/blogs?order=products">作品集 <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/blogs/list?keyword=products">作品集 <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/blogs?order=about_me">关于我</a>
+                    <a class="nav-link" href="/blogs/list?keyword=about_me">关于我</a>
                 </li>
 <!--                <form class="form-inline mt-2 mt-md-0">-->
 <!--                    <input class="form-control mr-sm-2" type="text" placeholder="搜索">-->

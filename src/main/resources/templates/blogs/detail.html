@@ -9,6 +9,7 @@
 <div class="container blog-content-container">
 
     <div class="row">
+
         <!-- 左侧栏目 -->
         <div class="col-md-4 col-xl-3">
             <div class="row">
@@ -84,22 +85,25 @@
         </div>
 
 
+        <div class="col-md-8 col-xl-9">
+            <!-- Blog Post -->
+            <div th:fragment="blog_list" id="blog_list">
+                <div class="card mb-4">
+                    <div class="card-block">
+                        <h2 class="card-title">
 
-        <div th:fragment="blog_list" id="blog_list">
-            <div class="card mb-4" th:each="blogModel : ${blogs}">
-                <div class="card-block">
-                    <h2 class="card-title">
-
-                        <a href="/blogs/1" class="card-link" title="wxmgcs" th:text="${blogModel.title}">
-                            标题
-                        </a></h2>
-                    <article class="post-content" th:utext="${blogModel.content}"/>
-                    <article class="post-content" th:utext="${blogModel.htmlContent}"/>
-                    <div class="card-text" th:text="'发表于 '+${blogModel.createTime}">
+                            <a class="card-link" title="wxmgcs" th:text="${blogModel.title}">
+                                标题
+                            </a></h2>
+                        <article class="post-content" th:utext="${blogModel.content}"/>
+                        <article class="post-content" th:utext="${blogModel.htmlContent}"/>
+                        <div class="card-text" th:text="'发表于 '+${blogModel.createTime}">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
     <!-- /.row -->
 
@@ -112,6 +116,11 @@
 
 <script>
     function fire_ajax_submit(e) {
+        var id = e.getAttribute("id");
+        $('#blog_list').load("/api/" + id);
+    }
+
+    function fire_ajax_submit_by_id(e) {
         var id = e.getAttribute("id");
         $('#blog_list').load("/api/" + id);
     }

@@ -5,10 +5,123 @@
 <head th:replace="~{fragments/header :: header}">
 </head>
 <body>
-<h3>android开发</h3>
-<h3>ios开发</h3>
-<h3>基于selenium的自动化测试</h3>
-<h3>基于netty的CMPP服务端</h3>
+<!-- Page Content -->
+<div class="container blog-content-container">
+
+    <div class="row">
+
+        <!-- 左侧栏目 -->
+        <div class="col-md-4 col-xl-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <span>
+                      <a href="" title="wxmgcs">
+                        <img src="../images/patrick.jpg" class="blog-avatar-230"
+                             width="30" height="60"
+                             th:width="30" th:height="60"
+                             alt="wxmgcs">
+                      </a>
+                    </span>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <h4 class="card-text">Patrick</h4>
+                </div>
+            </div>
+            <hr>
+            <div class="row ">
+                <div class="col-md-12">
+                    <h5><i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <a href="mailto:wxmgcs@gmail.com">wxmgcs@gmail.com</a></h5>
+                </div>
+            </div>
+
+            <!-- 分类 -->
+            <div class="card my-4">
+                <h5 class="card-header"><i class="fa fa-bars" aria-hidden="true"></i> 专题</h5>
+
+                <ul class="list-group">
+                    <U>
+                        <a id="jvm" class="list-group-item" title="JVM" onclick="fire_ajax_submit(this)">
+                            JVM
+                        </a>
+                    </U>
+                    <U>
+                        <a id="springboot" class="list-group-item" title="SpringBoot" onclick="fire_ajax_submit(this)">
+                            SpringBoot
+                        </a>
+                    </U>
+                    <U>
+                        <a id="springmvc" class="list-group-item" title="SpringMVC" onclick="fire_ajax_submit(this)">
+                            SpringMVC
+                        </a>
+                    </U>
+                    <U>
+                        <a id="springcloud" class="list-group-item" title="SpringCloud"
+                           onclick="fire_ajax_submit(this)">
+                            SpringCloud
+                        </a>
+                    </U>
+                    <U>
+                        <a id="android" class="list-group-item" title="Android" onclick="fire_ajax_submit(this)">
+                            Android
+                        </a>
+                    </U>
+                    <U>
+                        <a id="ios" class="list-group-item" title="IOS" onclick="fire_ajax_submit(this)">
+                            IOS
+                        </a>
+                    </U>
+                    <U>
+                        <a id="mysql" class="list-group-item" title="MySql" onclick="fire_ajax_submit(this)">
+                            MySql
+                        </a>
+                    </U>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="col-md-8 col-xl-9">
+            <!-- 工具栏 -->
+
+            <ul class="nav nav-tabs mr-auto">
+                <form class="form-inline mt-2 mt-md-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="搜索">
+                    <a href="/blogs?keyword=ww" class="btn btn-outline-secondary my-2 my-sm-0">
+                        <i class="fa fa-search" aria-hidden="true"></i></a>
+                </form>
+            </ul>
+
+            <!-- Blog Post -->
+            <div class="card-block">
+                <h3 class="card-title">android开发</h3>
+                <h3 class="card-title">ios开发</h3>
+                <h3 class="card-title">基于selenium的自动化测试</h3>
+                <h3 class="card-title">基于netty的CMPP服务端</h3>
+            </div>
+
+            <!-- Pagination -->
+            <div th:replace="~{fragments/page :: page}">...</div>
+        </div>
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+
 <div th:replace="~{fragments/footer :: footer}">...</div>
+<script src="../../js/blog.js" th:src="@{/static/js/blog.js}"></script>
+
+<script>
+    function fire_ajax_submit(e) {
+        var id = e.getAttribute("id");
+        $('#blog_list').load("/api/" + id);
+    }
+</script>
 </body>
 </html>

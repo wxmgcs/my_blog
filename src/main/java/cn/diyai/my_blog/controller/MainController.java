@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 	@GetMapping("/")
 	public String root() {
-		return "redirect:/index";
+		return "redirect:/blogs/list";
 	}
 	
 	@GetMapping("/index")
 	public String index() {
-		return "/blogs/index";
+		return "redirect:/blogs/list";
 	}
 
 	@GetMapping("/login")

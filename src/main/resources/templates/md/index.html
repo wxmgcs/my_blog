@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js"
+            th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script type="text/javascript">
+        $(document).ready({})
+    </script>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+<form method="post" action="./parse">
+    <div>
+        <textarea th:name="${inputName}" title="md" th:width="200px" th:height="300px"/>
+        <button type="submit">提交1</button>
+    </div>
+</form>
+
+</body>
+</html>

@@ -43,6 +43,31 @@ public class BlogController {
 			return "/me/products";
 		}
 
+		if("jvm".equals(keyword)){
+			return "/blogs/jvm/index";
+		}
+
+		if("springboot".equals(keyword)){
+			return "/blogs/SpringBoot/index";
+		}
+
+
+		if("springmvc".equals(keyword)){
+			return "/blogs/SpringMVC/index";
+		}
+
+		if("springcloud".equals(keyword)){
+			return "/blogs/SpringCloud/index";
+		}
+
+		if("android".equals(keyword)){
+			return "/blogs/Android/index";
+		}
+
+		if("ios".equals(keyword)){
+			return "/blogs/IOS/index";
+		}
+
 		if (category != null) {
 
 			System.out.println("category:" +category );

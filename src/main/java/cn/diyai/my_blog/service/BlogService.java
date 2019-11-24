@@ -29,7 +29,14 @@ public interface BlogService {
 	 */
 	Blog getBlogById(Long id);
 
-    List<Blog> getBlogsByKeyTopic(String topic);
+    List<Blog> getBlogsByTopic(String topic);
+
+	Object getBlogsByTopicLikeKeyword(String topic, String keyword);
+
+	void add(String topic, String title,String content, String htmlContent);
+	Blog add(Blog blog);
+
+	Object getBlogsByKeyWord(String keyword);
 
 //	/**
 //	 * 根据用户进行博客名称分页模糊查询（最新）

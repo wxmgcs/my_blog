@@ -95,9 +95,9 @@
                             <a class="card-link" title="wxmgcs" th:text="${blogModel.title}">
                                 标题
                             </a></h2>
-                        <article class="post-content" th:utext="${blogModel.content}"/>
+<!--                        <article class="post-content" th:utext="${blogModel.content}"/>-->
                         <article class="post-content" th:utext="${blogModel.htmlContent}"/>
-                        <div class="card-text" th:text="'发表于 '+${blogModel.createTime}">
+                        <div class="card-text" th:text="'发表于 '+${#dates.format(blogModel.createTime, 'yyyy-MM-dd HH:mm')}">
                         </div>
                     </div>
                 </div>

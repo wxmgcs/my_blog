@@ -1,39 +1,70 @@
 package cn.diyai.my_blog.service.impl;
 
 import cn.diyai.my_blog.domain.Blog;
+import cn.diyai.my_blog.repository.BlogRepository;
 import cn.diyai.my_blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Blog 服务.
- * 
- * @since 1.0.0 2017年4月7日
+ *
  * @author <a href="https://waylau.com">Way Lau</a>
+ * @since 1.0.0 2017年4月7日
  */
 @Service
 public class BlogServiceImpl implements BlogService {
 
-	@Override
-	public Blog getBlogById(Long id) {
-		return new Blog(id,"标题","关键词","详细内容",new Timestamp(System.currentTimeMillis()));
-	}
+    @Autowired
+    BlogRepository blogRepository;
 
-	@Override
-	public List<Blog> getBlogsByKeyTopic(String topic) {
-		List<Blog> blogs = new ArrayList<>();
-		blogs.add(new Blog(1L,topic+"标题1","概述1","详细内容1",new Timestamp(System.currentTimeMillis())));
-		blogs.add(new Blog(2L,topic+"标题2","概述2","详细内容2",new Timestamp(System.currentTimeMillis())));
-		blogs.add(new Blog(3L,topic+"标题3","概述3","详细内容3",new Timestamp(System.currentTimeMillis())));
-		return blogs;
-	}
+    @Override
+    public Blog getBlogById(Long id) {
+        Optional<Blog> optionalBlog = blogRepository.findById(id);
+        if (optionalBlog.isPresent()) {
+            return optionalBlog.get();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Blog> getBlogsByTopic(String topic) {
+        List<Blog> blogs;
+        blogs = blogRepository.findBlogByTopic(topic);
+        return blogs;
+    }
+
+    /**
+     * 根据主题，模糊查询
+     *
+     * @param topic
+     * @param keyword
+     * @return
+     */
+    @Override
+    public Object getBlogsByTopicLikeKeyword(String topic, String keyword) {
+        List<Blog> blogs = blogRepository.findBlogByTopicAndContentLike(topic, keyword);
+        return blogs;
+    }
+
+    @Override
+    public void add(String topic, String title,String content, String htmlContent) {
+        Blog blog = new Blog(topic, title,content, htmlContent);
+        blogRepository.save(blog);
+    }
+
+    @Override
+    public Blog add(Blog blog) {
+        return blogRepository.save(blog);
+    }
+
+    @Override
+    public Object getBlogsByKeyWord(String keyword) {
+        return blogRepository.findBlogsByContentLike(keyword);
+    }
 
 
 }

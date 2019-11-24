@@ -1,18 +1,22 @@
 package cn.diyai.my_blog.controller;
 
 import cn.diyai.my_blog.domain.Blog;
+import cn.diyai.my_blog.domain.Topic;
 import cn.diyai.my_blog.service.BlogService;
+import cn.diyai.my_blog.service.TopicService;
+import cn.diyai.my_blog.util.ConstraintViolationExceptionHandler;
+import cn.diyai.my_blog.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,133 +30,180 @@ import java.util.function.Function;
 @RequestMapping("/blogs")
 public class BlogController {
 
-	@Autowired
-	BlogService blogService;
+    @Autowired
+    BlogService blogService;
 
-	static HashMap<String,String> items = new HashMap<>();
-	static {
-		items.put("jvm","jvm");
-		items.put("springboot","springboot");
-		items.put("springmvc","springmvc");
-		items.put("springcloud","springcloud");
-		items.put("android","android");
-		items.put("ios","ios");
-		items.put("products","products");
-		items.put("about_me","about_me");
-	}
+    @Autowired
+	TopicService topicService;
 
-	@GetMapping("/list")
-	public String listBlogsByOrder(
-			@RequestParam(value="order",required=false,defaultValue="new") String order,
-			@RequestParam(value="category",required=false ) Long category,
-			@RequestParam(value="keyword",required=false ) String keyword,
-			Model model) {
+    static HashMap<String, String> items = new HashMap<>();
 
-		List<Blog> blogs = new ArrayList<>();
+    static {
+        items.put("jvm", "jvm");
+        items.put("springboot", "springboot");
+        items.put("springmvc", "springmvc");
+        items.put("springcloud", "springcloud");
+        items.put("android", "android");
+        items.put("ios", "ios");
+        items.put("products", "products");
+        items.put("about_me", "about_me");
+    }
 
-		Page<Blog> page = new Page<Blog>() {
-			@Override
-			public int getTotalPages() {
-				return 1;
-			}
+    @GetMapping("/list")
+    public String listBlogsByOrder(
+            @RequestParam(value = "order", required = false, defaultValue = "new") String order,
+            @RequestParam(value = "category", required = false) Long category,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            Model model) {
 
-			@Override
-			public long getTotalElements() {
-				return blogs.size();
-			}
+        List<Blog> blogs = new ArrayList<>();
 
-			@Override
-			public <U> Page<U> map(Function<? super Blog, ? extends U> function) {
-				return null;
-			}
+        Page<Blog> page = new Page<Blog>() {
+            @Override
+            public int getTotalPages() {
+                return 1;
+            }
 
-			@Override
-			public int getNumber() {
-				return 0;
-			}
+            @Override
+            public long getTotalElements() {
+                return blogs.size();
+            }
 
-			@Override
-			public int getSize() {
-				return 0;
-			}
+            @Override
+            public <U> Page<U> map(Function<? super Blog, ? extends U> function) {
+                return null;
+            }
 
-			@Override
-			public int getNumberOfElements() {
-				return 0;
-			}
+            @Override
+            public int getNumber() {
+                return 0;
+            }
 
-			@Override
-			public List<Blog> getContent() {
-				return null;
-			}
+            @Override
+            public int getSize() {
+                return 0;
+            }
 
-			@Override
-			public boolean hasContent() {
-				return false;
-			}
+            @Override
+            public int getNumberOfElements() {
+                return 0;
+            }
 
-			@Override
-			public Sort getSort() {
-				return null;
-			}
+            @Override
+            public List<Blog> getContent() {
+                return null;
+            }
 
-			@Override
-			public boolean isFirst() {
-				return false;
-			}
+            @Override
+            public boolean hasContent() {
+                return false;
+            }
 
-			@Override
-			public boolean isLast() {
-				return false;
-			}
+            @Override
+            public Sort getSort() {
+                return null;
+            }
 
-			@Override
-			public boolean hasNext() {
-				return false;
-			}
+            @Override
+            public boolean isFirst() {
+                return false;
+            }
 
-			@Override
-			public boolean hasPrevious() {
-				return false;
-			}
+            @Override
+            public boolean isLast() {
+                return false;
+            }
 
-			@Override
-			public Pageable nextPageable() {
-				return null;
-			}
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
 
-			@Override
-			public Pageable previousPageable() {
-				return null;
-			}
+            @Override
+            public boolean hasPrevious() {
+                return false;
+            }
 
-			@Override
-			public Iterator<Blog> iterator() {
-				return null;
-			}
-		};
-		model.addAttribute("page", page);
-		// 如果有指定的专题的内容
-		if(items.containsKey(keyword)){
-			model.addAttribute("blogs", blogService.getBlogsByKeyTopic(keyword));
-			return "/blogs/list";
-		}
+            @Override
+            public Pageable nextPageable() {
+                return null;
+            }
 
-		return "/blogs/list";
-	}
+            @Override
+            public Pageable previousPageable() {
+                return null;
+            }
 
-	@GetMapping("/{id}")
-	public String listBlogsByOrder(@PathVariable("id") Long id, Model model) {
-		Blog blog = blogService.getBlogById(id);
+            @Override
+            public Iterator<Blog> iterator() {
+                return null;
+            }
+        };
+        model.addAttribute("page", page);
+        // 如果有指定的专题的内容
+        if (items.containsKey(keyword)) {
+            model.addAttribute("blogs", blogService.getBlogsByTopic(keyword));
+            return "/blogs/list";
+        }
 
-		model.addAttribute("blogModel",blog);
-		System.out.println("blogId:" + id);
-		return "/blogs/detail";
-	}
+        return "/blogs/list";
+    }
 
+    @GetMapping("/{id}")
+    public String listBlogsByOrder(@PathVariable("id") Long id, Model model) {
+        Blog blog = blogService.getBlogById(id);
+
+        model.addAttribute("blogModel", blog);
+        System.out.println("blogId:" + id);
+        return "/blogs/detail";
+    }
+
+	/**
+	 * 获取新增博客的界面
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/edit")
-	public String editBlog() {
-		return "/blogs/edit";
+	public ModelAndView createBlog(Model model) {
+		// 获取用户分类列表
+
+		List<Topic> topics = topicService.findAll();
+
+		model.addAttribute("topics", topics);
+		model.addAttribute("fileServerUrl", null);// 文件服务器的地址返回给客户端
+		model.addAttribute("blog", new Blog(null,null, null, null));
+		return new ModelAndView("/blogs/edit", "blogModel", model);
 	}
+
+    @PostMapping("/edit")
+    public ResponseEntity<Response> saveBlog(@RequestBody Blog blog) {
+        // 对 Catalog 进行空处理
+//		if (blog.getCatalog().getId() == null) {
+//			return ResponseEntity.ok().body(new Response(false,"未选择分类"));
+//		}
+		Blog newBlog = null;
+        try {
+
+            // 判断是修改还是新增
+            if (blog.getId() == null) {
+				newBlog = new Blog();
+				newBlog.setTitle(blog.getTitle());
+				// 内部会转码
+				newBlog.setContent(blog.getContent());
+				newBlog.setSummary(blog.getSummary());
+				newBlog.setTopic(blog.getTopic());
+				newBlog.setTags(blog.getTags());
+                blogService.add(newBlog);
+            }
+
+        } catch (ConstraintViolationException e) {
+            return ResponseEntity.ok().body(new Response(false, ConstraintViolationExceptionHandler.getMessage(e)));
+        } catch (Exception e) {
+            return ResponseEntity.ok().body(new Response(false, e.getMessage()));
+        }
+
+        String redirectUrl = "/blogs/" + newBlog.getId();
+        return ResponseEntity.ok().body(new Response(true, "处理成功", redirectUrl));
+    }
 
 }

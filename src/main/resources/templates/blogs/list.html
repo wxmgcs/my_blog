@@ -12,18 +12,18 @@
 
         <!-- 左侧栏目 -->
         <div class="col-md-4 col-xl-3">
-            <div class="row">
-                <div class="col-md-12">
-                    <span>
-                      <a href="" title="wxmgcs">
-                        <img src="../images/patrick.jpg" class="blog-avatar-230"
-                             width="30" height="60"
-                             th:width="30" th:height="60"
-                             alt="wxmgcs">
-                      </a>
-                    </span>
-                </div>
-            </div>
+<!--            <div class="row">-->
+<!--                <div class="col-md-12">-->
+<!--                    <span>-->
+<!--                      <a href="" title="wxmgcs">-->
+<!--                        <img src="../images/patrick.jpg" class="blog-avatar-230"-->
+<!--                             width="30" height="60"-->
+<!--                             th:width="30" th:height="60"-->
+<!--                             alt="wxmgcs">-->
+<!--                      </a>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
             <br>
             <div class="row">
 
@@ -90,8 +90,8 @@
 
             <ul class="nav nav-tabs mr-auto">
                 <form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="搜索" th:value="${keyword}">
-                    <a id="search"  class="btn btn-outline-secondary my-2 my-sm-0" onclick="fire_ajax_submit(this)">
+                    <input id="search_text" class="form-control mr-sm-2" type="text" placeholder="搜索" th:value="${keyword}">
+                    <a id="search_by_keyword"  class="btn btn-outline-secondary my-2 my-sm-0" onclick="fire_ajax_search(this)">
                         <i class="fa fa-search" aria-hidden="true"></i></a>
                 </form>
             </ul>
@@ -105,9 +105,9 @@
                             <a th:href="${blogModel.id}" class="card-link" title="wxmgcs" th:text="${blogModel.title}">
                                 标题
                             </a></h2>
-                        <article class="post-content" th:utext="${blogModel.content}"/>
-                        <article class="post-content" th:utext="${blogModel.htmlContent}"/>
-                        <div class="card-text" th:text="'发表于 '+${blogModel.createTime}">
+                        <article class="post-content" th:utext="${blogModel.summary}"/>
+<!--                        <article class="post-content" th:utext="${blogModel.htmlContent}"/>-->
+                        <div class="card-text" th:text="'发表于 '+${#dates.format(blogModel.createTime, 'yyyy-MM-dd HH:mm')}">
                         </div>
                     </div>
                 </div>
@@ -129,12 +129,15 @@
 <script>
     function fire_ajax_submit(e) {
         var id = e.getAttribute("id");
+        // 清空输入的查询关键词
+        $('input:text').val("");
         $('#blog_list').load("/api/" + id);
     }
 
-    function fire_ajax_submit_by_id(e) {
+    function fire_ajax_search(e) {
+        var keyword = $('input:text').val();
         var id = e.getAttribute("id");
-        $('#blog_list').load("/api/" + id);
+        $('#blog_list').load("/api/" + id+"/"+keyword);
     }
 </script>
 </body>

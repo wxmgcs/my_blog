@@ -42,12 +42,44 @@
             <!-- 分类 -->
             <div class="card my-4">
                 <h5 class="card-header"><i class="fa fa-bars" aria-hidden="true"></i> 专题</h5>
-                <ul class="list-group" th:each="topic : ${topics}">
-                    <a id="${topic.name}" href="javascript:void(0)" class="list-group-item"
-                       th:attr="catalogId=*{topic.name}"
-                       th:text="${topic.name}" onclick="fire_ajax_submit(this)">
-                        JVM
-                    </a>
+
+                <ul class="list-group">
+                    <U>
+                        <a id="jvm" class="list-group-item" title="JVM" onclick="fire_ajax_submit(this)">
+                            JVM
+                        </a>
+                    </U>
+                    <U>
+                        <a id="springboot" class="list-group-item" title="SpringBoot" onclick="fire_ajax_submit(this)">
+                            SpringBoot
+                        </a>
+                    </U>
+                    <U>
+                        <a id="springmvc" class="list-group-item" title="SpringMVC" onclick="fire_ajax_submit(this)">
+                            SpringMVC
+                        </a>
+                    </U>
+                    <U>
+                        <a id="springcloud" class="list-group-item" title="SpringCloud"
+                           onclick="fire_ajax_submit(this)">
+                            SpringCloud
+                        </a>
+                    </U>
+                    <U>
+                        <a id="android" class="list-group-item" title="Android" onclick="fire_ajax_submit(this)">
+                            Android
+                        </a>
+                    </U>
+                    <U>
+                        <a id="ios" class="list-group-item" title="IOS" onclick="fire_ajax_submit(this)">
+                            IOS
+                        </a>
+                    </U>
+                    <U>
+                        <a id="mysql" class="list-group-item" title="MySql" onclick="fire_ajax_submit(this)">
+                            MySql
+                        </a>
+                    </U>
                 </ul>
             </div>
         </div>

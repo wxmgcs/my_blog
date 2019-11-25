@@ -153,7 +153,7 @@ public class BlogController {
     @GetMapping("/{id}")
     public String listBlogsByOrder(@PathVariable("id") Long id, Model model) {
         Blog blog = blogService.getBlogById(id);
-
+        model.addAttribute("topics",topicService.findAll());
         model.addAttribute("blogModel", blog);
         System.out.println("blogId:" + id);
         return "/blogs/detail";

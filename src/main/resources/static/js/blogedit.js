@@ -44,7 +44,6 @@ $(function() {
     // 发布博客
     $("#submitBlog").click(function() {
 
-        alert("1");
         // 获取 CSRF Token
         // var csrfToken = $("meta[name='_csrf']").attr("content");
         // var csrfHeader = $("meta[name='_csrf_header']").attr("content");

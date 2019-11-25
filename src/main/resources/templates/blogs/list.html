@@ -12,18 +12,18 @@
 
         <!-- 左侧栏目 -->
         <div class="col-md-4 col-xl-3">
-<!--            <div class="row">-->
-<!--                <div class="col-md-12">-->
-<!--                    <span>-->
-<!--                      <a href="" title="wxmgcs">-->
-<!--                        <img src="../images/patrick.jpg" class="blog-avatar-230"-->
-<!--                             width="30" height="60"-->
-<!--                             th:width="30" th:height="60"-->
-<!--                             alt="wxmgcs">-->
-<!--                      </a>-->
-<!--                    </span>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div class="row">-->
+            <!--                <div class="col-md-12">-->
+            <!--                    <span>-->
+            <!--                      <a href="" title="wxmgcs">-->
+            <!--                        <img src="../images/patrick.jpg" class="blog-avatar-230"-->
+            <!--                             width="30" height="60"-->
+            <!--                             th:width="30" th:height="60"-->
+            <!--                             alt="wxmgcs">-->
+            <!--                      </a>-->
+            <!--                    </span>-->
+            <!--                </div>-->
+            <!--            </div>-->
             <br>
             <div class="row">
 
@@ -42,56 +42,25 @@
             <!-- 分类 -->
             <div class="card my-4">
                 <h5 class="card-header"><i class="fa fa-bars" aria-hidden="true"></i> 专题</h5>
-
-                <ul class="list-group">
-                    <U>
-                        <a id="jvm" class="list-group-item" title="JVM" onclick="fire_ajax_submit(this)">
-                            JVM
-                        </a>
-                    </U>
-                    <U>
-                        <a id="springboot" class="list-group-item" title="SpringBoot" onclick="fire_ajax_submit(this)">
-                            SpringBoot
-                        </a>
-                    </U>
-                    <U>
-                        <a id="springmvc" class="list-group-item" title="SpringMVC" onclick="fire_ajax_submit(this)">
-                            SpringMVC
-                        </a>
-                    </U>
-                    <U>
-                        <a id="springcloud" class="list-group-item" title="SpringCloud"
-                           onclick="fire_ajax_submit(this)">
-                            SpringCloud
-                        </a>
-                    </U>
-                    <U>
-                        <a id="android" class="list-group-item" title="Android" onclick="fire_ajax_submit(this)">
-                            Android
-                        </a>
-                    </U>
-                    <U>
-                        <a id="ios" class="list-group-item" title="IOS" onclick="fire_ajax_submit(this)">
-                            IOS
-                        </a>
-                    </U>
-                    <U>
-                        <a id="mysql" class="list-group-item" title="MySql" onclick="fire_ajax_submit(this)">
-                            MySql
-                        </a>
-                    </U>
+                <ul class="list-group" th:each="topic : ${topics}">
+                    <a id="${topic.name}" href="javascript:void(0)" class="list-group-item"
+                       th:attr="catalogId=*{topic.name}"
+                       th:text="${topic.name}" onclick="fire_ajax_submit(this)">
+                        JVM
+                    </a>
                 </ul>
             </div>
         </div>
-
 
         <div class="col-md-8 col-xl-9">
             <!-- 工具栏 -->
 
             <ul class="nav nav-tabs mr-auto">
                 <form class="form-inline mt-2 mt-md-0">
-                    <input id="search_text" class="form-control mr-sm-2" type="text" placeholder="搜索" th:value="${keyword}">
-                    <a id="search_by_keyword"  class="btn btn-outline-secondary my-2 my-sm-0" onclick="fire_ajax_search(this)">
+                    <input id="search_text" class="form-control mr-sm-2" type="text" placeholder="搜索"
+                           th:value="${keyword}">
+                    <a id="search_by_keyword" class="btn btn-outline-secondary my-2 my-sm-0"
+                       onclick="fire_ajax_search(this)">
                         <i class="fa fa-search" aria-hidden="true"></i></a>
                 </form>
             </ul>
@@ -102,12 +71,14 @@
                     <div class="card-block">
                         <h2 class="card-title">
 
-                            <a th:href="${blogModel.id}" class="card-link" title="wxmgcs" th:text="${blogModel.title}">
+                            <a th:href="${blogModel.id}" class="card-link"
+                               title="wxmgcs" th:text="${blogModel.title}">
                                 标题
                             </a></h2>
                         <article class="post-content" th:utext="${blogModel.summary}"/>
-<!--                        <article class="post-content" th:utext="${blogModel.htmlContent}"/>-->
-                        <div class="card-text" th:text="'发表于 '+${#dates.format(blogModel.createTime, 'yyyy-MM-dd HH:mm')}">
+                        <!--                        <article class="post-content" th:utext="${blogModel.htmlContent}"/>-->
+                        <div class="card-text"
+                             th:text="'发表于 '+${#dates.format(blogModel.createTime, 'yyyy-MM-dd HH:mm')}">
                         </div>
                     </div>
                 </div>
@@ -126,10 +97,12 @@
 <div th:replace="~{fragments/footer :: footer}">...</div>
 <script src="../../js/blog.js" th:src="@{/static/js/blog.js}"></script>
 
-<script>
+<script th:inline="javascript">
     function fire_ajax_submit(e) {
-        var id = e.getAttribute("id");
+        // var id = e.getAttribute("id");
+
         // 清空输入的查询关键词
+        alert($('#catalogId').val());
         $('input:text').val("");
         $('#blog_list').load("/api/" + id);
     }
@@ -137,7 +110,7 @@
     function fire_ajax_search(e) {
         var keyword = $('input:text').val();
         var id = e.getAttribute("id");
-        $('#blog_list').load("/api/" + id+"/"+keyword);
+        $('#blog_list').load("/api/" + id + "/" + keyword);
     }
 </script>
 </body>

@@ -142,6 +142,7 @@ public class BlogController {
         model.addAttribute("page", page);
         // 如果有指定的专题的内容
         if (items.containsKey(keyword)) {
+            model.addAttribute("topics",topicService.findAll());
             model.addAttribute("blogs", blogService.getBlogsByTopic(keyword));
             return "/blogs/list";
         }

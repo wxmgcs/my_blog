@@ -88,17 +88,17 @@
 
         <!--        // 添加 Markdown parser 依赖-->
         <!--        compile('es.nitaur.markdown:txtmark:0.16')-->
-        <dependency>
-            <groupId>com.github.rjeschke</groupId>
-            <artifactId>txtmark</artifactId>
-            <version>0.12</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.rjeschke</groupId>-->
+<!--            <artifactId>txtmark</artifactId>-->
+<!--            <version>0.13</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.vladsch.flexmark</groupId>
-            <artifactId>flexmark-all</artifactId>
-            <version>0.50.44</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.vladsch.flexmark</groupId>-->
+<!--            <artifactId>flexmark-all</artifactId>-->
+<!--            <version>0.50.44</version>-->
+<!--        </dependency>-->
 
         <!--swagger-->
         <dependency>

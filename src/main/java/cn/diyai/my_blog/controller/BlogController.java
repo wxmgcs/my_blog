@@ -34,20 +34,7 @@ public class BlogController {
     BlogService blogService;
 
     @Autowired
-	TopicService topicService;
-
-    static HashMap<String, String> items = new HashMap<>();
-
-    static {
-        items.put("jvm", "jvm");
-        items.put("springboot", "springboot");
-        items.put("springmvc", "springmvc");
-        items.put("springcloud", "springcloud");
-        items.put("android", "android");
-        items.put("ios", "ios");
-        items.put("products", "products");
-        items.put("about_me", "about_me");
-    }
+    TopicService topicService;
 
     @GetMapping("/list")
     public String listBlogsByOrder(
@@ -141,40 +128,37 @@ public class BlogController {
         };
         model.addAttribute("page", page);
         // 如果有指定的专题的内容
-        if (items.containsKey(keyword)) {
-            model.addAttribute("topics",topicService.findAll());
-            model.addAttribute("blogs", blogService.getBlogsByTopic(keyword));
-            return "/blogs/list";
-        }
-
+        model.addAttribute("topics", topicService.findAll());
+        model.addAttribute("blogs", blogService.getBlogsByTopic(keyword));
         return "/blogs/list";
     }
 
     @GetMapping("/{id}")
     public String listBlogsByOrder(@PathVariable("id") Long id, Model model) {
         Blog blog = blogService.getBlogById(id);
-        model.addAttribute("topics",topicService.findAll());
+        model.addAttribute("topics", topicService.findAll());
         model.addAttribute("blogModel", blog);
         System.out.println("blogId:" + id);
         return "/blogs/detail";
     }
 
-	/**
-	 * 获取新增博客的界面
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("/edit")
-	public ModelAndView createBlog(Model model) {
-		// 获取用户分类列表
+    /**
+     * 获取新增博客的界面
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/edit")
+    public ModelAndView createBlog(Model model) {
+        // 获取用户分类列表
 
-		List<Topic> topics = topicService.findAll();
+        List<Topic> topics = topicService.findAll();
 
-		model.addAttribute("topics", topics);
-		model.addAttribute("fileServerUrl", null);// 文件服务器的地址返回给客户端
-		model.addAttribute("blog", new Blog(null,null, null, null));
-		return new ModelAndView("/blogs/edit", "blogModel", model);
-	}
+        model.addAttribute("topics", topics);
+        model.addAttribute("fileServerUrl", null);// 文件服务器的地址返回给客户端
+        model.addAttribute("blog", new Blog(null, null, null, null));
+        return new ModelAndView("/blogs/edit", "blogModel", model);
+    }
 
     @PostMapping("/edit")
     public ResponseEntity<Response> saveBlog(@RequestBody Blog blog) {
@@ -182,18 +166,18 @@ public class BlogController {
 //		if (blog.getCatalog().getId() == null) {
 //			return ResponseEntity.ok().body(new Response(false,"未选择分类"));
 //		}
-		Blog newBlog = null;
+        Blog newBlog = null;
         try {
 
             // 判断是修改还是新增
             if (blog.getId() == null) {
-				newBlog = new Blog();
-				newBlog.setTitle(blog.getTitle());
-				// 内部会转码
-				newBlog.setContent(blog.getContent());
-				newBlog.setSummary(blog.getSummary());
-				newBlog.setTopic(blog.getTopic());
-				newBlog.setTags(blog.getTags());
+                newBlog = new Blog();
+                newBlog.setTitle(blog.getTitle());
+                // 内部会转码
+                newBlog.setContent(blog.getContent());
+                newBlog.setSummary(blog.getSummary());
+                newBlog.setTopic(blog.getTopic());
+                newBlog.setTags(blog.getTags());
                 blogService.add(newBlog);
             }
 

@@ -35,12 +35,8 @@ public class APIController {
 
     @RequestMapping("/{topic}")
     public String listBlogsByTopic(@PathVariable("topic") String topic, Model model) {
-        if (items.containsKey(topic)) {
-            model.addAttribute("blogs", blogService.getBlogsByTopic(topic));
-            return "/blogs/list::blog_list";
-        }
-
-        return "/blogs/list";
+        model.addAttribute("blogs", blogService.getBlogsByTopic(topic));
+        return "/blogs/list::blog_list";
     }
 
     @RequestMapping("/{topic}/{keyword}")

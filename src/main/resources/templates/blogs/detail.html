@@ -43,13 +43,13 @@
             <div class="card my-4">
                 <h5 class="card-header"><i class="fa fa-bars" aria-hidden="true"></i> 专题</h5>
                 <ul class="list-group" th:each="topic : ${topics}">
-                    <a id="${topic.name}" href="javascript:void(0)" class="list-group-item"
-                       th:attr="catalogId=*{topic.name}"
-                       th:text="${topic.name}" onclick="fire_ajax_submit(this)">
+                    <a id="${topic.name}" th:attr="topic=${topic.name}" href="javascript:void(0)" class="list-group-item"
+                       th:text="${topic.name}">
                         JVM
                     </a>
                 </ul>
             </div>
+
         </div>
 
 
@@ -59,11 +59,9 @@
                 <div class="card mb-4">
                     <div class="card-block">
                         <h2 class="card-title">
-
                             <a class="card-link" title="wxmgcs" th:text="${blogModel.title}">
                                 标题
                             </a></h2>
-<!--                        <article class="post-content" th:utext="${blogModel.content}"/>-->
                         <article class="post-content" th:utext="${blogModel.htmlContent}"/>
                         <div class="card-text" th:text="'发表于 '+${#dates.format(blogModel.createTime, 'yyyy-MM-dd HH:mm')}">
                         </div>
@@ -87,6 +85,12 @@
         var id = e.getAttribute("id");
         $('#blog_list').load("/api/" + id);
     }
+
+    $('.list-group-item').click(function () {
+        var topic = $(this).attr('topic');
+        $('input:text').val("");
+        $('#blog_list').load("/api/" + topic);
+    });
 
     function fire_ajax_submit_by_id(e) {
         var id = e.getAttribute("id");

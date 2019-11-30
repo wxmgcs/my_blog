@@ -104,18 +104,6 @@
         $('#blog_list').load("/api/" + topic);
     });
 
-
-
-    function fire_ajax_submit(e) {
-        // var id = e.getAttribute("id");
-
-        // 清空输入的查询关键词
-        var name = $(this).attr('tt');
-        alert(name);
-        $('input:text').val("");
-        $('#blog_list').load("/api/" + id);
-    }
-
     function fire_ajax_search(e) {
         var keyword = $('input:text').val();
         var id = e.getAttribute("id");

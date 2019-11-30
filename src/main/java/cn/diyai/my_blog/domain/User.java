@@ -17,6 +17,7 @@ public class User {
 	private Long id; // 实体一个唯一标识
 	private String name;
 	private String email;
+	private int age;
 	
 	protected User() { // 无参构造函数;设为 protected 防止直接使用
 	}
@@ -26,7 +27,15 @@ public class User {
 		this.name = name;
 		this.email = email;
 	}
-	
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 	public Long getId() {
 		return id;
 	}

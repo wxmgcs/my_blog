@@ -14,6 +14,15 @@ public class Topic {
     @Size(min=2, max=50)
     @Column(nullable = false, length = 50) // 映射为字段，值不能为空
     private String name;
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public int getId() {
         return id;

@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="~{fragments/header :: header}">
+    <link href="../css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 </head>
 <body>
 <!-- Page Content -->
@@ -42,10 +43,12 @@
             <!-- 分类 -->
             <div class="card my-4">
                 <h5 class="card-header"><i class="fa fa-bars" aria-hidden="true"></i> 专题</h5>
+
                 <ul class="list-group" th:each="topic : ${topics}">
-                    <a id="${topic.name}" th:attr="topic=${topic.name}" href="javascript:void(0)" class="list-group-item"
-                       th:text="${topic.name}">
-                        JVM
+                    <a th:attr="topic=${topic.name}" href="javascript:void(0)" class="list-group-item"
+                       th:text="${topic.name} +'  ('+${topic.count}+')'">
+                        专题名称
+                        <span class="badge badge-pill bg-light align-text-bottom">27</span>
                     </a>
                 </ul>
             </div>
@@ -82,7 +85,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Pagination -->
             <div th:replace="~{fragments/page :: page}">...</div>
         </div>

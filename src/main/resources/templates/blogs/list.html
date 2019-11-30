@@ -100,7 +100,6 @@
 
     $('.list-group-item').click(function () {
         var topic = $(this).attr('topic');
-        alert(topic);
         $('input:text').val("");
         $('#blog_list').load("/api/" + topic);
     });

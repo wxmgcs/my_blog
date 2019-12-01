@@ -20,18 +20,6 @@ public class APIController {
 
     @Autowired
     BlogService blogService;
-    static HashMap<String, String> items = new HashMap<>();
-
-    static {
-        items.put("jvm", "jvm");
-        items.put("springboot", "springboot");
-        items.put("springmvc", "springmvc");
-        items.put("springcloud", "springcloud");
-        items.put("android", "android");
-        items.put("ios", "ios");
-        items.put("mysql", "mysql");
-        items.put("search_by_keyword", "search_by_keyword");
-    }
 
     @RequestMapping("/{topic}")
     public String listBlogsByTopic(@PathVariable("topic") String topic, Model model) {
@@ -43,14 +31,10 @@ public class APIController {
     public String listBlogsLike(@PathVariable("topic") String topic,
                                 @PathVariable("keyword") String keyword,
                                 Model model) {
-        if (items.containsKey(topic)) {
 //            model.addAttribute("blogs", blogService.getBlogsByTopicLikeKeyword(topic, keyword));
-            List<Blog> blogs = (List<Blog>) blogService.getBlogsByKeyWord("%"+keyword+"%");
-            model.addAttribute("blogs",blogs );
-            return "/blogs/list::blog_list";
-        }
-
-        return "/blogs/list";
+        List<Blog> blogs = (List<Blog>) blogService.getBlogsByKeyWord("%" + keyword + "%");
+        model.addAttribute("blogs", blogs);
+        return "/blogs/list::blog_list";
     }
 
 
@@ -59,12 +43,8 @@ public class APIController {
                           @RequestParam("title") String title,
                           @RequestParam("content") String content,
                           @RequestParam("htmlContent") String htmlContent) {
-        if (items.containsKey(topic)) {
-            blogService.add(topic, title,content, htmlContent);
-            return "添加成功";
-        }
-
-        return "无法添加";
+        blogService.add(topic, title, content, htmlContent);
+        return "添加成功";
     }
 
 
